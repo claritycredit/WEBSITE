@@ -466,10 +466,11 @@
   .popup-close:hover{ color:var(--gold-light); }
   .popup-modal iframe{
     flex:1 1 auto; width:100%; height:100%; border:none;
+    -webkit-overflow-scrolling:touch;
   }
   @media (max-width:640px){
     .popup-overlay{ padding:0; }
-    .popup-modal{ max-width:100%; height:100vh; border-width:0 0 0 0; }
+    .popup-modal{ max-width:100%; height:100vh; height:100dvh; border-width:0 0 0 0; }
   }
 </style>
 </head>
@@ -801,7 +802,7 @@
       <span>Book Your Call</span>
       <button type="button" class="popup-close" onclick="closePopup('bookingOverlay')" aria-label="Close booking window">&times;</button>
     </div>
-    <iframe id="bookingIframe" data-src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="no" title="Booking Calendar"></iframe>
+    <iframe id="bookingIframe" data-src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="yes" title="Booking Calendar"></iframe>
   </div>
 </div>
 

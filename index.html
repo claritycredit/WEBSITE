@@ -801,7 +801,7 @@
       <span>Book Your Call</span>
       <button type="button" class="popup-close" onclick="closePopup('bookingOverlay')" aria-label="Close booking window">&times;</button>
     </div>
-    <iframe id="bookingIframe" src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="no" title="Booking Calendar" loading="eager"></iframe>
+    <iframe id="bookingIframe" data-src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="no" title="Booking Calendar"></iframe>
   </div>
 </div>
 
@@ -811,14 +811,18 @@
       <span>Join the Email List</span>
       <button type="button" class="popup-close" onclick="closePopup('emailOverlay')" aria-label="Close signup window">&times;</button>
     </div>
-    <iframe id="emailIframe" src="https://api.leadconnectorhq.com/widget/form/42APyY9Ged80z6L9ttNr" scrolling="yes" title="Email Signup Form" loading="eager"></iframe>
+    <iframe id="emailIframe" data-src="https://api.leadconnectorhq.com/widget/form/42APyY9Ged80z6L9ttNr" scrolling="yes" title="Email Signup Form"></iframe>
   </div>
 </div>
 
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 <script>
-  function openPopup(id){
+  function openPopup(id, iframeId){
     var overlay = document.getElementById(id);
+    if(iframeId){
+      var iframe = document.getElementById(iframeId);
+      if(iframe && !iframe.src && iframe.dataset.src){ iframe.src = iframe.dataset.src; }
+    }
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('modal-open');
@@ -829,9 +833,9 @@
     overlay.setAttribute('aria-hidden','true');
     document.body.classList.remove('modal-open');
   }
-  function openBookingModal(){ openPopup('bookingOverlay'); }
+  function openBookingModal(){ openPopup('bookingOverlay', 'bookingIframe'); }
   function closeBookingModal(){ closePopup('bookingOverlay'); }
-  function openEmailModal(){ openPopup('emailOverlay'); }
+  function openEmailModal(){ openPopup('emailOverlay', 'emailIframe'); }
   function closeEmailModal(){ closePopup('emailOverlay'); }
   ['bookingOverlay','emailOverlay'].forEach(function(id){
     document.getElementById(id).addEventListener('click', function(e){

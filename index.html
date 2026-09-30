@@ -433,42 +433,43 @@
     *{ transition:none !important; animation:none !important; }
   }
 
-  /* ---------- Booking popup modal ---------- */
+  /* ---------- Popup modals (booking + email signup) ---------- */
   body.modal-open{ overflow:hidden; }
-  .booking-overlay{
+  .popup-overlay{
     display:flex; position:fixed; inset:0; z-index:200;
     background:rgba(13,27,42,0.85); backdrop-filter:blur(4px);
     align-items:center; justify-content:center; padding:24px;
     visibility:hidden; opacity:0; pointer-events:none;
     transition:opacity 0.18s ease;
   }
-  .booking-overlay.is-open{ visibility:visible; opacity:1; pointer-events:auto; }
-  .booking-modal{
+  .popup-overlay.is-open{ visibility:visible; opacity:1; pointer-events:auto; }
+  .popup-modal{
     position:relative; width:100%; max-width:900px; height:min(760px, 88vh);
     background:var(--cream); border:2px solid var(--gold);
     box-shadow:0 30px 80px rgba(0,0,0,0.5);
     display:flex; flex-direction:column; overflow:hidden;
   }
-  .booking-modal-head{
+  .popup-modal.popup-modal-narrow{ max-width:560px; height:min(680px, 88vh); }
+  .popup-head{
     display:flex; align-items:center; justify-content:space-between;
     padding:14px 20px; background:var(--navy); border-bottom:2px solid var(--gold);
     flex-shrink:0;
   }
-  .booking-modal-head span{
+  .popup-head span{
     font-family:var(--sans); font-weight:700; text-transform:uppercase;
     letter-spacing:0.08em; font-size:13px; color:var(--gold-light);
   }
-  .booking-modal-close{
+  .popup-close{
     background:none; border:none; color:var(--cream); cursor:pointer;
     font-size:22px; line-height:1; padding:4px 8px; font-family:var(--sans);
   }
-  .booking-modal-close:hover{ color:var(--gold-light); }
-  .booking-modal iframe{
+  .popup-close:hover{ color:var(--gold-light); }
+  .popup-modal iframe{
     flex:1 1 auto; width:100%; height:100%; border:none;
   }
   @media (max-width:640px){
-    .booking-overlay{ padding:0; }
-    .booking-modal{ max-width:100%; height:100vh; border-width:0 0 0 0; }
+    .popup-overlay{ padding:0; }
+    .popup-modal{ max-width:100%; height:100vh; border-width:0 0 0 0; }
   }
 </style>
 </head>
@@ -756,6 +757,9 @@
         <a class="btn-primary" href="javascript:void(0)" onclick="openBookingModal()">Book Your Audit</a>
         <a class="btn-ghost" href="https://instagram.com/flickmeupsu" target="_blank" rel="noopener">See Real Results on IG</a>
       </div>
+      <div class="cta-row" style="margin-top:18px;">
+        <a class="btn-ghost" href="javascript:void(0)" onclick="openEmailModal()">Join Our Email List</a>
+      </div>
     </div>
   </section>
 
@@ -779,6 +783,7 @@
         <div class="foot-col">
           <h5>Connect</h5>
           <a href="javascript:void(0)" onclick="openBookingModal()">Book a Call</a>
+          <a href="javascript:void(0)" onclick="openEmailModal()">Join Email List</a>
           <a href="https://instagram.com/flickmeupsu" target="_blank" rel="noopener">@flickmeupsu</a>
         </div>
       </div>
@@ -790,35 +795,51 @@
   </div>
 </footer>
 
-<div class="booking-overlay" id="bookingOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Book a call">
-  <div class="booking-modal">
-    <div class="booking-modal-head">
+<div class="popup-overlay" id="bookingOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Book a call">
+  <div class="popup-modal">
+    <div class="popup-head">
       <span>Book Your Call</span>
-      <button type="button" class="booking-modal-close" onclick="closeBookingModal()" aria-label="Close booking window">&times;</button>
+      <button type="button" class="popup-close" onclick="closePopup('bookingOverlay')" aria-label="Close booking window">&times;</button>
     </div>
     <iframe id="bookingIframe" src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="no" title="Booking Calendar" loading="eager"></iframe>
   </div>
 </div>
 
+<div class="popup-overlay" id="emailOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Join the email list">
+  <div class="popup-modal popup-modal-narrow">
+    <div class="popup-head">
+      <span>Join the Email List</span>
+      <button type="button" class="popup-close" onclick="closePopup('emailOverlay')" aria-label="Close signup window">&times;</button>
+    </div>
+    <iframe id="emailIframe" src="https://api.leadconnectorhq.com/widget/form/42APyY9Ged80z6L9ttNr" scrolling="yes" title="Email Signup Form" loading="eager"></iframe>
+  </div>
+</div>
+
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 <script>
-  function openBookingModal(){
-    var overlay = document.getElementById('bookingOverlay');
+  function openPopup(id){
+    var overlay = document.getElementById(id);
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('modal-open');
   }
-  function closeBookingModal(){
-    var overlay = document.getElementById('bookingOverlay');
+  function closePopup(id){
+    var overlay = document.getElementById(id);
     overlay.classList.remove('is-open');
     overlay.setAttribute('aria-hidden','true');
     document.body.classList.remove('modal-open');
   }
-  document.getElementById('bookingOverlay').addEventListener('click', function(e){
-    if(e.target === this){ closeBookingModal(); }
+  function openBookingModal(){ openPopup('bookingOverlay'); }
+  function closeBookingModal(){ closePopup('bookingOverlay'); }
+  function openEmailModal(){ openPopup('emailOverlay'); }
+  function closeEmailModal(){ closePopup('emailOverlay'); }
+  ['bookingOverlay','emailOverlay'].forEach(function(id){
+    document.getElementById(id).addEventListener('click', function(e){
+      if(e.target === this){ closePopup(id); }
+    });
   });
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){ closeBookingModal(); }
+    if(e.key === 'Escape'){ closePopup('bookingOverlay'); closePopup('emailOverlay'); }
   });
 </script>
 

@@ -436,11 +436,13 @@
   /* ---------- Booking popup modal ---------- */
   body.modal-open{ overflow:hidden; }
   .booking-overlay{
-    display:none; position:fixed; inset:0; z-index:200;
+    display:flex; position:fixed; inset:0; z-index:200;
     background:rgba(13,27,42,0.85); backdrop-filter:blur(4px);
     align-items:center; justify-content:center; padding:24px;
+    visibility:hidden; opacity:0; pointer-events:none;
+    transition:opacity 0.18s ease;
   }
-  .booking-overlay.is-open{ display:flex; }
+  .booking-overlay.is-open{ visibility:visible; opacity:1; pointer-events:auto; }
   .booking-modal{
     position:relative; width:100%; max-width:900px; height:min(760px, 88vh);
     background:var(--cream); border:2px solid var(--gold);
@@ -794,17 +796,14 @@
       <span>Book Your Call</span>
       <button type="button" class="booking-modal-close" onclick="closeBookingModal()" aria-label="Close booking window">&times;</button>
     </div>
-    <iframe id="bookingIframe" src="" scrolling="no" title="Booking Calendar"></iframe>
+    <iframe id="bookingIframe" src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="no" title="Booking Calendar" loading="eager"></iframe>
   </div>
 </div>
 
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 <script>
-  var BOOKING_URL = "https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8";
   function openBookingModal(){
     var overlay = document.getElementById('bookingOverlay');
-    var iframe = document.getElementById('bookingIframe');
-    if(!iframe.src){ iframe.src = BOOKING_URL; }
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('modal-open');

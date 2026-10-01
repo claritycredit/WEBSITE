@@ -472,6 +472,20 @@
     .popup-overlay{ padding:0; }
     .popup-modal{ max-width:100%; height:100vh; height:100dvh; border-width:0 0 0 0; }
   }
+  .email-section{ background:var(--navy-mid); }
+  .email-section .section-head{ max-width:560px; margin-left:auto; margin-right:auto; text-align:center; }
+  .email-embed-wrap{
+    max-width:560px; margin:0 auto; background:var(--cream);
+    border:2px solid var(--gold); box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    overflow:hidden;
+  }
+  .email-embed-wrap iframe{
+    display:block; width:100%; height:640px; border:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  @media (max-width:640px){
+    .email-embed-wrap iframe{ height:560px; }
+  }
 </style>
 </head>
 <body>
@@ -749,6 +763,20 @@
     </div>
   </section>
 
+  <!-- EMAIL LIST -->
+  <section class="section email-section" id="join">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">Stay In The Loop</span>
+        <h2>Join Our Email List</h2>
+        <p>Credit tips, client wins, and the occasional nudge that your file can change. No spam, just clarity.</p>
+      </div>
+      <div class="email-embed-wrap">
+        <iframe id="emailIframe" src="https://api.leadconnectorhq.com/widget/form/42APyY9Ged80z6L9ttNr" scrolling="yes" title="Email Signup Form"></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="cta-final">
     <div class="wrap">
@@ -757,9 +785,6 @@
       <div class="cta-row">
         <a class="btn-primary" href="javascript:void(0)" onclick="openBookingModal()">Book Your Audit</a>
         <a class="btn-ghost" href="https://instagram.com/flickmeupsu" target="_blank" rel="noopener">See Real Results on IG</a>
-      </div>
-      <div class="cta-row" style="margin-top:18px;">
-        <a class="btn-ghost" href="javascript:void(0)" onclick="openEmailModal()">Join Our Email List</a>
       </div>
     </div>
   </section>
@@ -784,7 +809,7 @@
         <div class="foot-col">
           <h5>Connect</h5>
           <a href="javascript:void(0)" onclick="openBookingModal()">Book a Call</a>
-          <a href="javascript:void(0)" onclick="openEmailModal()">Join Email List</a>
+          <a href="#join">Join Email List</a>
           <a href="https://instagram.com/flickmeupsu" target="_blank" rel="noopener">@flickmeupsu</a>
         </div>
       </div>
@@ -803,16 +828,6 @@
       <button type="button" class="popup-close" onclick="closePopup('bookingOverlay')" aria-label="Close booking window">&times;</button>
     </div>
     <iframe id="bookingIframe" data-src="https://api.leadconnectorhq.com/widget/booking/j6cJIpYWanseBStg3wS8" scrolling="yes" title="Booking Calendar"></iframe>
-  </div>
-</div>
-
-<div class="popup-overlay" id="emailOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Join the email list">
-  <div class="popup-modal popup-modal-narrow">
-    <div class="popup-head">
-      <span>Join the Email List</span>
-      <button type="button" class="popup-close" onclick="closePopup('emailOverlay')" aria-label="Close signup window">&times;</button>
-    </div>
-    <iframe id="emailIframe" data-src="https://api.leadconnectorhq.com/widget/form/42APyY9Ged80z6L9ttNr" scrolling="yes" title="Email Signup Form"></iframe>
   </div>
 </div>
 
@@ -836,15 +851,13 @@
   }
   function openBookingModal(){ openPopup('bookingOverlay', 'bookingIframe'); }
   function closeBookingModal(){ closePopup('bookingOverlay'); }
-  function openEmailModal(){ openPopup('emailOverlay', 'emailIframe'); }
-  function closeEmailModal(){ closePopup('emailOverlay'); }
-  ['bookingOverlay','emailOverlay'].forEach(function(id){
+  ['bookingOverlay'].forEach(function(id){
     document.getElementById(id).addEventListener('click', function(e){
       if(e.target === this){ closePopup(id); }
     });
   });
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){ closePopup('bookingOverlay'); closePopup('emailOverlay'); }
+    if(e.key === 'Escape'){ closePopup('bookingOverlay'); }
   });
 </script>
 

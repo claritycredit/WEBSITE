@@ -1,6 +1,6 @@
-# Clarity Credit & Co. — Website
+# Clarity Financial Services — Website
 
-A single self-contained HTML file for the Clarity Credit & Co. marketing site. No build step, no dependencies to install — everything (styles, images, scripts) lives inside `index.html`.
+A single self-contained HTML file for the Clarity Financial Services marketing site. No build step, no dependencies to install — everything (styles, images, scripts) lives inside `index.html`.
 
 ## Publishing (GitHub Pages)
 
@@ -14,6 +14,7 @@ That's the whole deploy process. There's nothing else to install or configure.
 
 - **One file, four parts:** `<style>` (all CSS), the page markup (`<body>`), the two popup modals (booking call + hidden leftover styling), and a `<script>` block at the bottom handling the booking popup and smooth interactions.
 - **Images are embedded**, not linked — the logo, hero photo, and headshot are all base64-encoded directly into the HTML (`data:image/...;base64,...`). This means the site has zero broken-image risk, but it also means the file itself is large (a few MB). To swap an image, you need to re-encode a new one to base64 and replace the relevant `src="data:image/..."` string — ask Claude to do this any time you have a new photo.
+- **Logo** is used three times: the nav bar, the small badge on the hero photo (monogram only, no wordmark), and the footer. The nav/footer version sits on a cream rounded card and the hero badge on a cream circle, so the logo stays legible against the navy background — ask Claude to rebuild these any time the logo artwork changes.
 
 ## Key sections (in page order)
 
@@ -28,7 +29,7 @@ That's the whole deploy process. There's nothing else to install or configure.
 | About Su | Founder bio + headshot |
 | Join Our Email List | Embedded signup form (LeadConnector) |
 | Final CTA | Book Your Audit / Instagram |
-| Footer | Nav links, Connect links, social |
+| Footer | Nav links, Connect links (Book a Call, Join Email List, support email, Instagram) |
 
 ## Interactive elements
 
